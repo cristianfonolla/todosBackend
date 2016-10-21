@@ -71,7 +71,7 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Task::create($request->input());
     }
 
     /**
@@ -82,6 +82,6 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::destroy($id);
     }
 }

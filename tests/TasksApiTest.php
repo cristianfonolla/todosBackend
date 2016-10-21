@@ -4,26 +4,44 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+
+
+
 class TasksApiTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+
+    private $uri = '/api/task';
+    use DatabaseMigrations;
+
+
+
     public function testShowAllTasks()
     {
-        $this->json('GET','/api/task')
+        $this->json('GET',$this->uri)
 //             ->dump();
              ->seeJson();
     }
 
+    /**
+     *
+     * @group failing
+     */
     public function testShowOneTask()
     {
-        $id = 1;
-        $this->json('GET','/api/task' . '/' . $id )
-//             ->seeJson();
-             ->dump();
+        $task = factory(App\Task::class)->create();
+        $this->json('GET', $this->uri . '/' . $task->id )
+            ->seeJsonStructure([
+
+                "id","name","done","priority"
+            ])
+             ->seeJsonContains([
+
+                 "name" => $task->name,
+//                 "done" => $task->done,
+//                 "priority" => $task->priority
+
+             ]);
+//             ->dump();
 
     }
 }
