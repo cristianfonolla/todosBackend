@@ -2,4 +2,8 @@
 
 use Illuminate\Http\Request;
 
-Route::resource('task','TasksController');
+
+
+//Route::resource(['prefix' => 'v1'], function () {
+    Route::resource('task','TasksController');
+//});
