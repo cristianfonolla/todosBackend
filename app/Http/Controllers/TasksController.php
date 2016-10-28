@@ -15,19 +15,25 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // No metadata ->
         //Exempple : Pagination.
         //No error messages.
         //Transformations : Hem de transformar el que ensenyem.
-        $tasks = Task::all();
+        $tasks = Task::paginate(15);
 
         return Response::json([
-            'propietari' => 'Crsistian',
-            'data' => $tasks->toArray()
-        ],200);
+
+            
+
+
+
+        ]);
     }
+
+//        return Task::paginate($request->input('per_page'));
+
 
     /**
      * Show the form for creating a new resource.
