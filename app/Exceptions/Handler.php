@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Exceptions;
-
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Response;
 class Handler extends ExceptionHandler
 {
     /**
@@ -22,7 +20,6 @@ class Handler extends ExceptionHandler
         \Illuminate\Session\TokenMismatchException::class,
         \Illuminate\Validation\ValidationException::class,
     ];
-
     /**
      * Report or log an exception.
      *
@@ -35,7 +32,6 @@ class Handler extends ExceptionHandler
     {
         parent::report($exception);
     }
-
     /**
      * Render an exception into an HTTP response.
      *
@@ -45,18 +41,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof ModelNotFoundException) {
-
+        if ($exception instanceof ModelNotFoundException) {
             return Response::json([
-                'error' => 'Hi ha una excepcio', $exception->getMessage(),
-                'code' => '10'
-
+                "error" => "Hi ha hagut una excepció " . $exception->getMessage(),
+                "code" => 10
             ],404);
-
         }
         return parent::render($request, $exception);
     }
-
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
@@ -69,7 +61,6 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
-
         return redirect()->guest('login');
     }
 }
