@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Transformers\Contracts\Transformer;
+use App\Transformers\TaskTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class UserTaskController extends Controller
     /**
      * UserTaskController constructor.
      */
-    public function __construct(Transformer $transformer)
+    public function __construct(TaskTransformer $transformer)
     {
 
         parent::__construct($transformer);
@@ -30,12 +31,8 @@ class UserTaskController extends Controller
      */
     public function index($id)
     {
-
-
-
-
-        $user = User::findOrFail($id);
-        $tasks = Task::paginate(15);
+        $user =  User::findOrFail($id);
+        $tasks = $user->tasks()->paginate(5);
         return $this->generatePaginatedResponse($tasks,["propietari" => "Sergi Tur"]);
     }
 
