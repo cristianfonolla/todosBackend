@@ -17,6 +17,7 @@ class TaskTableSeeder extends Seeder
 
 
         factory(App\User::class, 50)->create()->each(function($user) {
+
             $user->tasks()->saveMany(
 
                 factory(App\Task::class, 5)->create(["user_id" => $user->id])

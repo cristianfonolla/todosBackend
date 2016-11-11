@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Repositories\UserRepository;
 use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\Request;
@@ -7,13 +8,17 @@ use App\Http\Requests;
 use Response;
 class UsersController extends Controller
 {
+    protected $repository;
+
     /**
      * UsersController constructor.
      */
-    public function __construct(UserTransformer $transformer)
+    public function __construct(UserTransformer $transformer, UserRepository $repository)
     {
 
         parent::__construct($transformer);
+
+        $this->repository = $repository;
 
     }
 
@@ -55,7 +60,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->repository->find($id);
+        return $this->transformer->transform($user);
     }
     /**
      * Show the form for editing the specified resource.
