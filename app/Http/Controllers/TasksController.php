@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Repositories\TaskRepository;
 use App\Task;
 use App\Transformers\TaskTransformer;
 use Illuminate\Database\Eloquent\Model;
@@ -8,13 +9,17 @@ use App\Http\Requests;
 use Response;
 class TasksController extends Controller
 {
+    protected $repository;
+
     /**
      * TasksController constructor.
      */
-    public function __construct(TaskTransformer $transformer)
+    public function __construct(TaskTransformer $transformer, TaskRepository $repository)
     {
 
         parent::__construct($transformer);
+
+        $this->repository = $repository;
 
 
     }
@@ -64,25 +69,8 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-//        try {
-//            return Task::findOrFail($id);
-//        } catch (\Exception $e) {
-//            return Response::json([
-//                "error" => "Hi ha hagut una excepció",
-//                "code" => 10
-//            ],404);
-//        }
-//        $task = Task::find($id);
-//
-//        if ( $task != null) {
-//            return $task;
-//        }
-//
-//        return Response::json([
-//            "error" => "Hi ha hagut una excepció",
-//            "code" => 10
-//        ],404);
-        $task = Task::findOrFail($id);
+//        $task = Task::findOrFail($id);
+        $task = $this->repository->find($id);
         return $this->transformer->transform($task);
     }
     /**

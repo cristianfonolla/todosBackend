@@ -1,8 +1,8 @@
 <?php
 namespace App\Transformers;
 use App\Exceptions\IncorrectModelException;
-use App\Transformers\Contracts\Transformer;
-class UserTransformer implements Transformer
+
+class UserTransformer extends Transformer
 {
     public function transform($resource)
     {
