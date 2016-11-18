@@ -6,12 +6,19 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
+
+/**
+ * Class UsersController
+ * @package App\Http\Controllers
+ */
 class UsersController extends Controller
 {
     protected $repository;
 
     /**
      * UsersController constructor.
+     * @param UserTransformer $transformer
+     * @param UserRepository $repository
      */
     public function __construct(UserTransformer $transformer, UserRepository $repository)
     {

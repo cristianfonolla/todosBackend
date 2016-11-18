@@ -7,12 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
+
+
+/**
+ * Class TasksController
+ *
+ * Descripcio llarga
+ *
+ *
+ *@package App\Http\Controllers
+ *
+ */
+
 class TasksController extends Controller
 {
+    /**
+     * Repository object
+     *
+     * @var TaskRepository
+     */
     protected $repository;
 
     /**
      * TasksController constructor.
+     * @param TaskTransformer $transformer
+     * @param TaskRepository $repository
      */
     public function __construct(TaskTransformer $transformer, TaskRepository $repository)
     {
@@ -25,7 +44,10 @@ class TasksController extends Controller
     }
 
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         // No metadata
@@ -36,11 +58,17 @@ class TasksController extends Controller
         return $this->generatePaginatedResponse($tasks,["propietari" => "Sergi Tur"]);
     }
 
+    /**
+     *
+     */
     public function create()
     {
         //
     }
 
+    /**
+     * @param Request $request
+     */
     public function store(Request $request)
     {
 //        $request->input('name');
@@ -49,6 +77,10 @@ class TasksController extends Controller
 //        Task::create($request->all());
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function show($id)
     {
 //        $task = Task::findOrFail($id);
@@ -56,16 +88,26 @@ class TasksController extends Controller
         return $this->transformer->transform($task);
     }
 
+    /**
+     * @param $id
+     */
     public function edit($id)
     {
         //
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     */
     public function update(Request $request, $id)
     {
         //
     }
 
+    /**
+     * @param $id
+     */
     public function destroy($id)
     {
 

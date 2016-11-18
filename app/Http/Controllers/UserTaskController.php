@@ -11,10 +11,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * Class UserTaskController
+ * @package App\Http\Controllers
+ */
 class UserTaskController extends Controller
 {
     /**
      * UserTaskController constructor.
+     * @param TaskTransformer $transformer
      */
     public function __construct(TaskTransformer $transformer)
     {
@@ -27,6 +32,7 @@ class UserTaskController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function index($id)

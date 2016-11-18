@@ -6,6 +6,11 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Response;
+
+/**
+ * Class Controller
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -34,8 +39,10 @@ class Controller extends BaseController
 //        ];
 //    }
     /**
-     * @param $resource
+     * @param $resources
+     * @param array $metadata
      * @return \Illuminate\Http\JsonResponse
+     * @internal param $resource
      */
     protected function generatePaginatedResponse($resources, array $metadata = [])
     {
@@ -45,9 +52,11 @@ class Controller extends BaseController
         ];
         return Response::json(array_merge($metadata, $paginationData, $data), 200);
     }
+
     /**
-     * @param $resource
+     * @param $resources
      * @return array
+     * @internal param $resource
      */
     protected function generatePaginationData($resources)
     {

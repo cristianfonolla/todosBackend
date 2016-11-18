@@ -4,9 +4,17 @@ namespace App\Transformers;
 
 use App\Transformers\Contracts\Transformer as TransformerContract;
 
+/**
+ * Class Transformer
+ * @package App\Transformers
+ */
 abstract class Transformer implements TransformerContract
 {
 
+    /**
+     * @param $resources
+     * @return array
+     */
     public function transformCollection($resources) {
         //Collections: Laravel collections
         return array_map(function($resource) {
