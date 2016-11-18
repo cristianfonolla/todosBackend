@@ -26,6 +26,7 @@ elixir(function(mix) {
             './public/css/adminlte-app.css',
             './node_modules/icheck/skins/square/blue.css',
             './public/css/toastr.css',
+            './node_modules/sweetalert/dist/sweetalert.css',
         ])
         .copy('node_modules/font-awesome/fonts/*.*','public/fonts/')
         .copy('node_modules/ionicons/dist/fonts/*.*','public/fonts/')

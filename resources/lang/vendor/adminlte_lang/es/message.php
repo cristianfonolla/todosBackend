@@ -69,7 +69,7 @@ return [
     'tabmessages'             => 'Usted tiene 4 mensajes',
     'supteam'                 => 'Equipo de Apoyo',
     'awesometheme'            => '¿Por qué no comprar un nuevo tema impresionante?',
-    'allmessages'             => 'Ver todos los mensajes',
+    'allmessages'             => 'Ver todos.vue los mensajes',
     'notifications'           => 'Tiene 10 notificaciones',
     'newmembers'              => '5 nuevos miembros se unieron hoy',
     'viewall'                 => 'Veure tot',

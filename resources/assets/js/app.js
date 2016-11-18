@@ -18,69 +18,14 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('todos', require('./components/todos.vue'));
 
 // const app = new Vue({
 //     el: '#app'
 // });
 
 const app = new Vue({
-    el: '#app',
-    data: {
-
-        message:'Hello Vue!',
-        seen: false,
-        todos: [
-
-            {
-
-                name: 'Learn JC',
-                done: true,
-                priority: 27
-
-            },
-            {
-
-                name: 'Learn PHP',
-                done: false,
-                priority: 13
-
-            },
-            {
-
-                name: 'Learn Pa',
-                done: false,
-                priority: 23
-
-            }
-
-        ]
-
-
-    },
-
-    methods: {
-
-        reverseMessage: function() {
-            this.message = this.message.split('').reverse().join('');
-        },
-
-        fetchData: function() {
-            // GET /someUrl
-            this.$http.get('/api/v1/task').then((response) => {
-                this.todos = response.data.data;
-        }, (response) => {
-                // error callback
-                sweetAlert("Oops...", "Something went wrong!", "error");
-                console.log(response);
-            });
-        }
-    },
-
-    created: function() {
-        console.log('Component created!');
-        this.fetchData()
-    }
-
+    el: '#app'
 });
 
 
@@ -125,7 +70,7 @@ const app = new Vue({
 //     data: {
 //         message: 'Hello',
 //         seen: false,
-//         todos: [
+//         todos.vue: [
 //             {
 //                 name: 'fer 1',
 //                 done: true,
@@ -150,7 +95,7 @@ const app = new Vue({
 //         // fetchData: function() {
 //         //     // GET /someUrl
 //         //     this.$http.get('/api/v1/task').then((response) => {
-//         //         this.todos = response.data.data;
+//         //         this.todos.vue = response.data.data;
 //         // }, (response) => {
 //         //         // error callback
 //         //         sweetAlert("Oops...", "Something went wrong!", "error");

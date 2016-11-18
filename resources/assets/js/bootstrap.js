@@ -21,7 +21,13 @@ require('icheck');
  */
 
 window.Vue = require('vue');
-require('vue-resource');
+// require('vue-resource');
+
+window.axios = require('axios');
+Vue.prototype.$http = axios;
+
+require('sweetalert');
+
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
@@ -29,11 +35,11 @@ require('vue-resource');
  * included with Laravel will automatically verify the header's value.
  */
 
-Vue.http.interceptors.push((request, next) => {
-    request.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
-
-    next();
-});
+// Vue.http.interceptors.push((request, next) => {
+//     request.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
+//
+//     next();
+// });
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
