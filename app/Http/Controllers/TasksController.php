@@ -55,7 +55,7 @@ class TasksController extends Controller
         // No error messages
         // Transformations: hem de transformar el que ensenyem
         $tasks = Task::paginate(15);
-        return $this->generatePaginatedResponse($tasks,["propietari" => "Sergi Tur"]);
+        return $this->generatePaginatedResponse($tasks,["propietari" => "Crisitan Fonollà Prats"]);
     }
 
     /**
@@ -75,6 +75,12 @@ class TasksController extends Controller
 //        dd($request->all());
         Task::create($request->all());
 //        Task::create($request->all());
+        return response([
+            'error'   => false,
+            'created' => (bool) true,
+            'message' => 'Task created successfully',
+        ], 200);
+
     }
 
     /**
@@ -102,7 +108,15 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Task::findOrFail($id)->update($request->all());
+
+        return response([
+
+            'updated' => true,
+            'error'   => false,
+            'message' => 'Tasca actualitzada correctament!',
+
+        ], 200);
     }
 
     /**
@@ -110,6 +124,14 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
+
+        Task::findOrFail($id)->delete();
+
+        return response([
+            'error'   => false,
+            'deleted' => true,
+            'message' => 'Task deleted successfully',
+        ], 200);
 
     }
 }

@@ -38,16 +38,17 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::paginate(15);
-        return $this->generatePaginatedResponse($users,["propietari" => "Sergi Tur"]);
+        return $this->generatePaginatedResponse($users,["propietari" => "Cristian Fonollà Prats"]);
     }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+
     }
     /**
      * Store a newly created resource in storage.
@@ -57,7 +58,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+
+        return response([
+            'created' => true,
+            'error'   => false,
+            'message' => 'Usuari creat!',
+        ], 200);
+
     }
     /**
      * Display the specified resource.
@@ -89,7 +97,14 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        User::findOrFail($id)->update($request->all());
+
+        return response([
+            'updated' => true,
+            'error'   => false,
+            'message' => 'Usuari actualitzat!',
+        ], 200);
+
     }
     /**
      * Remove the specified resource from storage.
@@ -99,6 +114,13 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return response([
+            'deleted' => true,
+            'error'   => false,
+            'message' => 'Usuari esborrat!',
+        ], 200);
+
     }
 }

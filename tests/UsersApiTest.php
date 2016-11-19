@@ -1,9 +1,6 @@
 <?php
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-/**
- * Class TasksApiTest.
- */
-class TasksApiTest extends TestCase
+class UsersApiTest extends TestCase
 {
     use DatabaseMigrations;
     /**
@@ -11,163 +8,150 @@ class TasksApiTest extends TestCase
      *
      * @var string
      */
-    protected $uri = '/api/v1/task';
+    protected $uri = '/api/v1/user';
     /**
-     * Default number of tasks created in database.
+     * Default number of users created in database.
      */
-    const DEFAULT_NUMBER_OF_TASKS = 5;
+    const DEFAULT_NUMBER_OF_USERS = 5;
     /**
-     * Seed database with tasks.
+     * Seed database with users.
      *
-     * @param int $numberOfTasks to create
+     * @param int $numberOfUsers to create
      */
-    protected function seedDatabaseWithTasks($numberOfTasks = self::DEFAULT_NUMBER_OF_TASKS)
+    protected function seedDatabaseWithUsers($numberOfUsers = self::DEFAULT_NUMBER_OF_USERS)
     {
-        factory(App\Task::class, $numberOfTasks)->create(['user_id' => 1]);
+        factory(App\User::class, $numberOfUsers)->create();
     }
     /**
-     * Create task.
+     * Create user.
      *
      * @return mixed
      */
-    protected function createTask()
+    protected function createUser()
     {
-        return factory(App\Task::class)->make(['user_id' => 1]);
+        return factory(App\User::class)->make();
     }
     /**
-     * Convert task to array.
+     * Convert user to array.
      *
-     * @param $task
+     * @param $user
      *
      * @return array
      */
-    protected function convertTaskToArray($task)
+    protected function convertUserToArray($user)
     {
-        //        return $task->toArray();
+        //        return $user->toArray();
         return [
-            'name'     => $task['name'],
-            'done'     => (bool) $task['done'],
-            'priority' => (int) $task['priority'],
-            'user_id'  => (int) $task['user_id'],
+            'name'  => $user['name'],
+            'email' => $user['email'],
         ];
     }
     /**
-     * Create and persist task on database.
+     * Create and persist user on database.
      *
      * @return mixed
      */
-    protected function createAndPersistTask()
+    protected function createAndPersistUser()
     {
-        return factory(App\Task::class)->create(['user_id' => 1]);
+        return factory(App\User::class)->create();
     }
     //TODO ADD TEST FOR AUTHENTICATION AND REFACTOR EXISTING TESTS
     //NOT AUTHORIZED: $this->assertEquals(301, $response->status());
     /**
-     * Test Retrieve all tasks.
+     * Test Retrieve all users.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testRetrieveAllTasks()
+    public function testRetrieveAllUsers()
     {
         //Seed database
-        $this->seedDatabaseWithTasks();
-//        $tasks = factory(App\Task::class,5)->create();
-//      dd($tasks);
-//        dd($this->json('GET',$this->uri)->seeJson());
-//        dd($this->json('GET', $this->uri)->dump());
+        $this->seedDatabaseWithUsers();
         $this->json('GET', $this->uri)
             ->seeJsonStructure([
-//
                 'propietari', 'total', 'per_page', 'current_page', 'last_page', 'next_page_url', 'prev_page_url',
                 'data' => [
                     '*' => [
-                        'name', 'done', 'priority',
+                        'name', 'email',
                     ],
                 ],
             ])
             ->assertEquals(
-                self::DEFAULT_NUMBER_OF_TASKS,
+                self::DEFAULT_NUMBER_OF_USERS,
                 count($this->decodeResponseJson()['data'])
             );
-//        dd($this->decodeResponseJson());
     }
     /**
-     * Test Retrieve one task.
+     * Test Retrieve one user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testRetrieveOneTask()
+    public function testRetrieveOneUser()
     {
-        //Create task in database
-        $task = $this->createAndPersistTask();
-        $this->json('GET', $this->uri.'/'.$task->id)
+        //Create user in database
+        $user = $this->createAndPersistUser();
+        $this->json('GET', $this->uri.'/'.$user->id)
             ->seeJsonStructure(
-                ['name', 'done', 'priority'])
+                ['name', 'email'])
 //DONE @see Controller.transform
 //  Needs Transformers to work: convert string to booelan and string to integer
             ->seeJsonContains([
-                'name'     => $task->name,
-                'done'     => $task->done,
-                'priority' => $task->priority,
-//                "created_at" => $task->created_at,
-//                "updated_at" => $task->updated_at,
+                'name'  => $user->name,
+                'email' => $user->email,
             ]);
     }
     /**
-     * Test Create new task.
+     * Test Create new user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testCreateNewTask()
+    public function testCreateNewUser()
     {
-        $task = $this->createTask();
-//        dd($this->convertTaskToArray($task));
-        $this->json('POST', $this->uri, $atask = $this->convertTaskToArray($task))
+        $user = $this->createUser();
+//        $this->json('POST', $this->uri, $auser = $this->convertUserToArray($user))->dump();
+        $this->json('POST', $this->uri, $auser = $this->convertUserToArray($user))
             ->seeJson([
                 'created' => true,
             ])
-            ->seeInDatabase('tasks', $atask);
-//            ->dump();
+            ->seeInDatabase('users', $auser);
     }
     /**
-     * Test update existing task.
+     * Test update existing user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testUpdateExistingTask()
+    public function testUpdateExistingUser()
     {
-        $task = $this->createAndPersistTask();
-        $task->done = !$task->done;
-        $task->name = 'New task name';
-        $this->json('PUT', $this->uri.'/'.$task->id, $atask = $this->convertTaskToArray($task))
+        $user = $this->createAndPersistUser();
+        $user->name = 'New user name';
+        $this->json('PUT', $this->uri.'/'.$user->id, $auser = $this->convertUserToArray($user))
             ->seeJson([
                 'updated' => true,
             ])
-            ->seeInDatabase('tasks', $atask);
+            ->seeInDatabase('users', $auser);
     }
     /**
-     * Test delete existing task.
+     * Test delete existing user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testDeleteExistingTask()
+    public function testDeleteExistingUser()
     {
-        $task = $this->createAndPersistTask();
-        $this->json('DELETE', $this->uri.'/'.$task->id, $atask = $this->convertTaskToArray($task))
+        $user = $this->createAndPersistUser();
+        $this->json('DELETE', $this->uri.'/'.$user->id, $auser = $this->convertUserToArray($user))
             ->seeJson([
                 'deleted' => true,
             ])
-            ->notSeeInDatabase('tasks', $atask);
+            ->notSeeInDatabase('users', $auser);
     }
     /**
      * Test not exists.
@@ -183,35 +167,35 @@ class TasksApiTest extends TestCase
             ->assertEquals(404, $this->response->status());
     }
     /**
-     * Test get not existing task.
+     * Test get not existing user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testGetNotExistingTask()
+    public function testGetNotExistingUser()
     {
 //        $this->atestNotExists('GET');
     }
     /**
-     * Test delete not existing task.
+     * Test delete not existing user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testUpdateNotExistingTask()
+    public function testUpdateNotExistingUser()
     {
 //        $this->atestNotExists('PUT');
     }
     /**
-     * Test delete not existing task.
+     * Test delete not existing user.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
-    public function testDeleteNotExistingTask()
+    public function testDeleteNotExistingUser()
     {
 //        $this->atestNotExists('DELETE');
     }
