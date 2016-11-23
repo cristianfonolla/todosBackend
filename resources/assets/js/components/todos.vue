@@ -1,26 +1,25 @@
 <template>
-
-
-
+<!--<div>-->
+    <!--<p v-show="seen">{{message}}</p>-->
+    <!--<input type="text" v-model="message">-->
+    <!--<button v-on:click="reverseMessage">Reverse</button>-->
+<!--</div>-->
     <table class="table table-bordered">
-        <tr>
-
-
-            <th>Tasca</th>
-            <!--<th style="width: 40px">Label</th>-->
-        </tr>
-        <tr v-for="todo in todos">
-                    <!--<p v-show="seen">{{message}}</p>-->
-                    <!--<input type="text" v-model="message">-->
-                    <!--<button v-on:click="reverseMessage">Reverse</button>-->
-                            {{todo.name}} | {{todo.priority}} | {{todo.done}}
-            <!--<td><span class="badge bg-red">55%</span></td>-->
-        </tr>
-        
+       <thead>
+       <tr>
+           <th>Name</th>
+           <th>Priority</th>
+           <th>Done</th>
+       </tr>
+       </thead>
+        <tbody>
+            <tr v-for="todo in todos">
+                <td>{{ todo.name }}</td>
+                <td>{{ todo.priority }}</td>
+                <td>{{ todo.done }}</td>
+            </tr>
+        </tbody>
     </table>
-
-
-
 </template>
 
 
