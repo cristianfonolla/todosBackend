@@ -11,6 +11,10 @@ Route::group(['middleware' => 'auth'],function (){
         return view('tokens');
     });
 
+    Route::get('users', function () {
+        dd(App\User::paginate());
+    });
+
 });
 
 
