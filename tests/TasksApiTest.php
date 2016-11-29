@@ -1,21 +1,27 @@
 <?php
+
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 /**
  * Class TasksApiTest.
  */
 class TasksApiTest extends TestCase
 {
     use DatabaseMigrations;
+
     /**
      * RESOURCE URL ON API.
      *
      * @var string
      */
-    protected $uri = '/api/v1/task';
+    protected $uri = '/api/v1/tasks';
+
     /**
      * Default number of tasks created in database.
      */
     const DEFAULT_NUMBER_OF_TASKS = 5;
+
     /**
      * Seed database with tasks.
      *
@@ -23,8 +29,9 @@ class TasksApiTest extends TestCase
      */
     protected function seedDatabaseWithTasks($numberOfTasks = self::DEFAULT_NUMBER_OF_TASKS)
     {
-        factory(App\Task::class, $numberOfTasks)->create(['user_id' => 1]);
+        factory(App\Task::class, $numberOfTasks)->create();
     }
+
     /**
      * Create task.
      *
@@ -32,8 +39,9 @@ class TasksApiTest extends TestCase
      */
     protected function createTask()
     {
-        return factory(App\Task::class)->make(['user_id' => 1]);
+        return factory(App\Task::class)->make();
     }
+
     /**
      * Convert task to array.
      *
@@ -41,16 +49,16 @@ class TasksApiTest extends TestCase
      *
      * @return array
      */
-    protected function convertTaskToArray($task)
+    protected function convertTaskToArray(Model $task)
     {
         //        return $task->toArray();
         return [
-            'name'     => $task['name'],
-            'done'     => (bool) $task['done'],
-            'priority' => (int) $task['priority'],
-            'user_id'  => (int) $task['user_id'],
+            'name'     => $task->name,
+            'done'     => $task->done,
+            'priority' => $task->priority,
         ];
     }
+
     /**
      * Create and persist task on database.
      *
@@ -58,45 +66,55 @@ class TasksApiTest extends TestCase
      */
     protected function createAndPersistTask()
     {
-        return factory(App\Task::class)->create(['user_id' => 1]);
+        return factory(App\Task::class)->create();
     }
+
     //TODO ADD TEST FOR AUTHENTICATION AND REFACTOR EXISTING TESTS
     //NOT AUTHORIZED: $this->assertEquals(301, $response->status());
+
+
+    /**
+     *
+     */
+    public function login()
+    {
+        $user = factory(App\User::class)->create();
+        $this->actingAs($user);
+    }
+
+
+
+
     /**
      * Test Retrieve all tasks.
      *
-     * @group ok
+     * @group failing
      *
      * @return void
      */
     public function testRetrieveAllTasks()
     {
+
+
         //Seed database
         $this->seedDatabaseWithTasks();
-//        $tasks = factory(App\Task::class,5)->create();
-//      dd($tasks);
-//        dd($this->json('GET',$this->uri)->seeJson());
-//        dd($this->json('GET', $this->uri)->dump());
+
+        $this->login();
+
         $this->json('GET', $this->uri)
             ->seeJsonStructure([
-//
-                'propietari', 'total', 'per_page', 'current_page', 'last_page', 'next_page_url', 'prev_page_url',
-                'data' => [
-                    '*' => [
-                        'name', 'done', 'priority',
-                    ],
+                '*' => [
+                    'id', 'name', 'done', 'priority',
                 ],
             ])
             ->assertEquals(
                 self::DEFAULT_NUMBER_OF_TASKS,
-                count($this->decodeResponseJson()['data'])
+                count($this->decodeResponseJson())
             );
-//        dd($this->decodeResponseJson());
     }
+
     /**
      * Test Retrieve one task.
-     *
-     * @group ok
      *
      * @return void
      */
@@ -104,41 +122,37 @@ class TasksApiTest extends TestCase
     {
         //Create task in database
         $task = $this->createAndPersistTask();
-        $this->json('GET', $this->uri.'/'.$task->id)
+
+        $this->json('GET', $this->uri.$task->id)
             ->seeJsonStructure(
-                ['name', 'done', 'priority'])
-//DONE @see Controller.transform
-//  Needs Transformers to work: convert string to booelan and string to integer
+                ['id', 'name', 'done', 'priority', 'created_at', 'updated_at'])
+//TODO  Needs Transformers to work: convert string to booelan and string to integer
             ->seeJsonContains([
-                'name'     => $task->name,
-                'done'     => $task->done,
-                'priority' => $task->priority,
-//                "created_at" => $task->created_at,
-//                "updated_at" => $task->updated_at,
+                'name'       => $task->name,
+                'done'       => $task->done,
+                'priority'   => $task->priority,
+                'created_at' => $task->created_at,
+                'updated_at' => $task->updated_at,
             ]);
     }
+
     /**
      * Test Create new task.
-     *
-     * @group ok
      *
      * @return void
      */
     public function testCreateNewTask()
     {
         $task = $this->createTask();
-//        dd($this->convertTaskToArray($task));
         $this->json('POST', $this->uri, $atask = $this->convertTaskToArray($task))
             ->seeJson([
                 'created' => true,
             ])
             ->seeInDatabase('tasks', $atask);
-//            ->dump();
     }
+
     /**
      * Test update existing task.
-     *
-     * @group ok
      *
      * @return void
      */
@@ -153,10 +167,9 @@ class TasksApiTest extends TestCase
             ])
             ->seeInDatabase('tasks', $atask);
     }
+
     /**
      * Test delete existing task.
-     *
-     * @group ok
      *
      * @return void
      */
@@ -169,12 +182,13 @@ class TasksApiTest extends TestCase
             ])
             ->notSeeInDatabase('tasks', $atask);
     }
+
     /**
      * Test not exists.
      *
      * @param $http_method
      */
-    protected function atestNotExists($http_method)
+    protected function testNotExists($http_method)
     {
         $this->json($http_method, $this->uri.'/99999999')
             ->seeJson([
@@ -182,39 +196,37 @@ class TasksApiTest extends TestCase
             ])
             ->assertEquals(404, $this->response->status());
     }
+
     /**
      * Test get not existing task.
-     *
-     * @group ok
      *
      * @return void
      */
     public function testGetNotExistingTask()
     {
-//        $this->atestNotExists('GET');
+        $this->testNotExists('GET');
     }
+
     /**
      * Test delete not existing task.
-     *
-     * @group ok
      *
      * @return void
      */
     public function testUpdateNotExistingTask()
     {
-//        $this->atestNotExists('PUT');
+        $this->testNotExists('PUT');
     }
+
     /**
      * Test delete not existing task.
-     *
-     * @group ok
      *
      * @return void
      */
     public function testDeleteNotExistingTask()
     {
-//        $this->atestNotExists('DELETE');
+        $this->testNotExists('DELETE');
     }
+
     /**
      * Test pagination.
      *
@@ -224,7 +236,9 @@ class TasksApiTest extends TestCase
     {
         //TODO
     }
+
     //TODO: Test validation
+
     /**
      * Test name is required and done is set to false and priority to 1.
      *
@@ -234,31 +248,27 @@ class TasksApiTest extends TestCase
     {
         //TODO
     }
+
     /**
      * Test priority has to be an integer.
      *
      * @return void
      */
-    public function testPriorityHasToBeAnInteger()
+    public function testPriorityHaveToBeAnInteger()
     {
-        //        $task = $this->createAndPersistTask();
-//
-//        $this->json('GET', $this->uri .'/'. $task->id);
-//        $pri = $this->decodeResponseJson()['priority'];
-//        $this->assertInternalType("int",$pri);
+        //TODO
     }
+
     /**
      * Test done has to be a boolean.
      *
      * @return void
      */
-    public function testDoneHasToBeBoolean()
+    public function testDoneHaveToBeBoolean()
     {
-        //        $task = $this->createAndPersistTask();
-//
-//        $this->json('GET', $this->uri .'/'. $task->id);
-//        $done = $this->decodeResponseJson()['done'];
-////        $this->assertInternalType("int",$done);
-//        $this->assertInternalType("boolean",$done);
+        //TODO
+
+
     }
 }
+

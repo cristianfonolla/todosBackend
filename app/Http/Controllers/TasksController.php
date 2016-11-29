@@ -54,7 +54,13 @@ class TasksController extends Controller
         // Pagination
         // No error messages
         // Transformations: hem de transformar el que ensenyem
+
+
         $tasks = Task::paginate(15);
+
+
+
+
         return $this->generatePaginatedResponse($tasks,["propietari" => "Crisitan Fonollà Prats"]);
     }
 

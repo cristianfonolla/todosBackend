@@ -5,6 +5,24 @@
     <!--<button v-on:click="reverseMessage">Reverse</button>-->
     <!--</div>-->
     <div>
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Add Task</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Task</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Task">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Tasques</h3>
@@ -15,8 +33,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"  v-on:click="setVisibility('all')">All</a></li>
-                        <li><a href="#"  @click="setVisibility('active')">Active</a></li>
+                        <li><a href="#" v-on:click="setVisibility('all')">All</a></li>
+                        <li><a href="#" @click="setVisibility('active')">Active</a></li>
                         <li><a href="#/" @click="setVisibility('completed')">Completed</a></li>
                     </ul>
                 </div>
@@ -124,6 +142,7 @@
 
         methods: {
 
+
         setVisibility: function(visibility) {
 
             console.log("Han fet click");
@@ -154,6 +173,7 @@
         }
 
         }
+
 
 
 

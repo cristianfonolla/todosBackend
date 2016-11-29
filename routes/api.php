@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 // http -a cat.seguretat@gmail.com:passdeprovahttp://localhost:8080/api/v1/task
 
-Route::group(['prefix' => 'v1','middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'v1'], function () {
 
     Route::resource('task' , 'TasksController');
 
@@ -17,3 +17,5 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:api'], function () {
 
 
 });
+
+//,'middleware' => 'auth:api'
