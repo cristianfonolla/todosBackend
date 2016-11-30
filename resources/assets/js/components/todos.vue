@@ -54,7 +54,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(todo, index) in filteredTodos">
-                        <td>{{index + 1}}</td>
+                        <td>{{index + from}}</td>
                         <td>{{todo.name}}</td>
                         <td>{{todo.priority}}</td>
                         <td>{{todo.done}}</td>
@@ -72,13 +72,10 @@
             <!-- /.box-body -->
             <!--TODO http://www.pontikis.net/labs/bs_pagination/demo/-->
             <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
+
+                    <span class="pull-left">Showing {{ from }} to {{ to }} of {{ total }} entries</span>
+
+
             </div>
         </div>
     </div>
@@ -99,10 +96,13 @@
 
             return {
 
-            message: 'hola que tal',
-            seen: false,
             todos: [],
-            visibility: 'all'  //'active' 'completed'
+            visibility: 'all', // 'active' 'completed'
+            newTodo: '',
+            perPage: 5,
+            from: 0,
+            to: 0,
+            total: 0,
 
             }
 
@@ -155,14 +155,27 @@
         },
 
         fetchData: function() {
-        // GET /someUrl
-            this.$http.get('/api/v1/task').then((response) => {
+
+            return this.fetchPage(1);
+
+        },
+
+        fetchPage: function(page){
+
+            // GET /someUrl
+            this.$http.get('/api/v1/task?page=' + page).then((response) => {
             this.todos = response.data.data;
+            this.perPage = response.data.per_page;
+            this.to = response.data.to;
+            this.from = response.data.from;
+            this.total = response.data.total;
             }, (response) => {
             // error callback
             sweetAlert("Oops...", "Something went wrong!", "error");
             console.log(response);
+
         });
+
 
         }
 
