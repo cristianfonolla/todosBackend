@@ -75,6 +75,9 @@
 
                     <span class="pull-left">Showing {{ from }} to {{ to }} of {{ total }} entries</span>
 
+                    <pagination :current-page="1"></pagination>
+
+
 
             </div>
         </div>
@@ -90,11 +93,15 @@
 
 <script>
 
+import Pagination from './Pagination.vue'
+
     export default {
 
-        data(){
+    components : { Pagination },
 
-            return {
+    data() {
+
+        return {
 
             todos: [],
             visibility: 'all', // 'active' 'completed'
@@ -102,12 +109,11 @@
             perPage: 5,
             from: 0,
             to: 0,
-            total: 0,
+            total: 0
 
-            }
+        }
 
-
-        },
+    },
 
         computed: {
 
