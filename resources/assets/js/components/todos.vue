@@ -1,28 +1,24 @@
+<style>
+</style>
 <template>
-    <!--<div>-->
-    <!--<p v-show="seen">{{message}}</p>-->
-    <!--<input type="text" v-model="message">-->
-    <!--<button v-on:click="reverseMessage">Reverse</button>-->
-    <!--</div>-->
     <div>
-
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Add Task</h3>
+                <h3 class="box-title">Add task</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="#">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Task</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Task">
+                        <label for="name">Name</label>
+                        <input type="name" class="form-control" id="name" placeholder="Enter task name here"
+                               v-model="newTodo"
+                               @keyup.enter="addTodo">
                     </div>
                 </div>
             </form>
         </div>
-
-
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Tasques</h3>
@@ -33,8 +29,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" v-on:click="setVisibility('all')">All</a></li>
-                        <li><a href="#" @click="setVisibility('active')">Active</a></li>
+                        <li><a href="#"  v-on:click="setVisibility('all')">All</a></li>
+                        <li><a href="#"  @click="setVisibility('active')">Active</a></li>
                         <li><a href="#/" @click="setVisibility('completed')">Completed</a></li>
                     </ul>
                 </div>
@@ -54,7 +50,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(todo, index) in filteredTodos">
-                        <td>{{index + from}}</td>
+                        <td>{{index + from }}</td>
                         <td>{{todo.name}}</td>
                         <td>{{todo.priority}}</td>
                         <td>{{todo.done}}</td>
@@ -70,139 +66,102 @@
                 </table>
             </div>
             <!-- /.box-body -->
-            <!--TODO http://www.pontikis.net/labs/bs_pagination/demo/-->
+            <!--
+            TODO http://www.pontikis.net/labs/bs_pagination/demo/
+            http://fareez.info/blog/pagination-component-using-vuejs/
+            https://laravel.com/docs/5.3/pagination
+            https://laravel.com/api/5.1/Illuminate/Pagination/AbstractPaginator.html
+            -->
             <div class="box-footer clearfix">
+                <span class="pull-left">Showing {{ from }} to {{ to }} of {{ total }} entries</span>
 
-                    <span class="pull-left">Showing {{ from }} to {{ to }} of {{ total }} entries</span>
-
-                    <pagination
-                            :current-page="1"
-                            :items-per-page="perPage"
-                            :total-items="total"
-                            @page-changed="fetchPage"></pagination>
-
-
-
+                <pagination
+                        :current-page="page"
+                        :items-per-page="perPage"
+                        :total-items="total"
+                        @page-changed="pageChanged"></pagination>
             </div>
         </div>
     </div>
 </template>
-
-
-<style>
-
-
-</style>
-
-
 <script>
-
 import Pagination from './Pagination.vue'
-
-    export default {
-
+export default {
     components : { Pagination },
-
     data() {
-
         return {
-
             todos: [],
             visibility: 'all', // 'active' 'completed'
             newTodo: '',
             perPage: 5,
             from: 0,
             to: 0,
-            total: 0
-
+            total: 0,
+            page: 1
         }
-
     },
-
-        computed: {
-
-            filteredTodos: function() {
-                var filters = {
-                    all: function (todos) {
-                        return todos;
-                    },
-                    active: function (todos) {
-                        return todos.filter(function (todo) {
-                            return !todo.done;
-                        });
-                    },
-                    completed: function (todos) {
-                        return todos.filter(function (todo) {
-                            return todo.done;
-                        });
-                    }
+    computed: {
+        filteredTodos: function() {
+            var filters = {
+                all: function (todos) {
+                    return todos;
+                },
+                active: function (todos) {
+                    return todos.filter(function (todo) {
+                        return !todo.done;
+                    });
+                },
+                completed: function (todos) {
+                    return todos.filter(function (todo) {
+                        return todo.done;
+                    });
                 }
-
-                return filters[this.visibility](this.todos);
-
-
             }
-
+            return filters[this.visibility](this.todos);
+        }
+    },
+    created() {
+        console.log('Component todolist created.');
+        this.fetchData();
+    },
+    methods: {
+        pageChanged: function(pageNum) {
+            this.page = pageNum;
+            this.fetchPage(pageNum);
         },
-
-        created() {
-            console.log('Component todolist ready.');
-            this.fetchData();
+        addTodo: function() {
+            var value = this.newTodo && this.newTodo.trim();
+            if (!value) {
+                return;
+            }
+            this.todos.push({
+                name: value,
+                priority: 1,
+                done: false
+            });
+            this.newTodo = '';
         },
-
-        methods: {
-
-
         setVisibility: function(visibility) {
-
-            console.log("Han fet click");
             this.visibility = visibility;
-
         },
-
-        reverseMessage: function() {
-            this.message = this.message.split('').reverse().join('');
-        },
-
         fetchData: function() {
-
             return this.fetchPage(1);
-
         },
-
-        fetchPage: function(page){
-
+        fetchPage: function(page) {
             // GET /someUrl
             this.$http.get('/api/v1/task?page=' + page).then((response) => {
-            this.todos = response.data.data;
-            this.perPage = response.data.per_page;
-            this.to = response.data.to;
-            this.from = response.data.from;
-            this.total = response.data.total;
+                console.log(response);
+                this.todos = response.data.data;
+                this.perPage = response.data.per_page;
+                this.to = response.data.to;
+                this.from = response.data.from;
+                this.total = response.data.total;
             }, (response) => {
-            // error callback
-            sweetAlert("Oops...", "Something went wrong!", "error");
-            console.log(response);
-
-        });
-
-
+                // error callback
+                sweetAlert("Oops...", "Something went wrong!", "error");
+                console.log(response);
+            });
         }
-
-
-
-
-
-        }
-
-        }
-
-
-
-
-
-
-
+    }
+}
 </script>
-
-

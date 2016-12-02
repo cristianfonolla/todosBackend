@@ -1,19 +1,23 @@
 <template>
     <ul class="pagination pagination-sm no-margin pull-right">
-        <li><a href="#">&laquo;</a></li>
-
-        <li v-for="n in paginationRange">
-            <a href="#" @click.prevent="pageChanged(n)">{{n}}</a>
+        <li><a href="#" @click.prevent="pageChanged(1)" aria-label="First"><span aria-hidden="true">&laquo;</span></a></li>
+        <li><a href="#" @click.prevent="pageChanged(page-1)" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>
+        <li v-for="n in paginationRange" :class="activePage(n)">
+            <a href="#" @click.prevent="pageChanged(n)" >{{n}}</a>
         </li>
-
-
-        <li><a href="#">&raquo;</a></li>
+        <li><a href="#" @click.prevent="pageChanged(page+1)" aria-label="Next"><span aria-hidden="true">&gt;</span></a></li>
+        <li><a href="#" @click.prevent="pageChanged(lastPage)" aria-label="Last"><span aria-hidden="true">&raquo;</span></a></li>
     </ul>
 </template>
 <style>
 </style>
 <script>
 export default {
+    data() {
+        return {
+            page: 1
+        }
+    },
     props: {
         // Current Page
             currentPage: {
@@ -21,12 +25,12 @@ export default {
               required: true
             },
             // Total page
-             totalPages: Number,
-
-             itemsPerPage: Number,
+            totalPages: Number,
+            // Visible Pages
+            // Items per page
+            itemsPerPage: Number,
             // Total items
             totalItems: Number,
-            // Visible Pages
             visiblePages: {
               type: Number,
               default: 5,
@@ -37,15 +41,15 @@ export default {
           lowerBound (num, limit) {
             return num >= limit ? num : limit
           },
-
-          pageChanged(pageNum) {
-
-            this.$emit('page-changed',pageNum)
-
+          pageChanged (pageNum) {
+            if (pageNum<=1) pageNum=1
+            if (pageNum>=this.lastPage) pageNum=this.lastPage
+            this.page = pageNum;
+            this.$emit('page-changed', pageNum)
           },
-
-
-
+          activePage (pageNum) {
+              return this.currentPage === pageNum ? 'active' : ''
+          }
     },
     computed: {
         lastPage () {
@@ -68,6 +72,9 @@ export default {
               }
               return range
             }
-    }
+    },
+    created() {
+        this.page = this.currentPage;
+    },
 }
 </script>
