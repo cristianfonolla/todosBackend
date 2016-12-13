@@ -32,5 +32,27 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
+        $this->defineGates();
+    }
+
+    private function defineGates()
+    {
+
+        Gate::define('update-task',function($user, $task){
+
+
+            return $user->id == $task->user_id;
+
+
+        });
+
+
+        Gate::define('show-tasks',function($user, $task){
+
+
+            return true;
+
+
+        });
     }
 }
