@@ -1,42 +1,12 @@
 TAP version 13
-ok 1 - AcachaAdminLTELaravelTest::testLandingPage
-ok 2 - AcachaAdminLTELaravelTest::testLandingPageWithUserLogged
-ok 3 - AcachaAdminLTELaravelTest::testLoginPage
-ok 4 - AcachaAdminLTELaravelTest::testLogin
-ok 5 - AcachaAdminLTELaravelTest::testLoginRequiredFields
-ok 6 - AcachaAdminLTELaravelTest::testRegisterPage
-ok 7 - AcachaAdminLTELaravelTest::testPasswordResetPage
-ok 8 - AcachaAdminLTELaravelTest::testHomePageForUnauthenticatedUsers
-ok 9 - AcachaAdminLTELaravelTest::testHomePageForAuthenticatedUsers
-ok 10 - AcachaAdminLTELaravelTest::testLogout
-ok 11 - AcachaAdminLTELaravelTest::test404Page
-ok 12 - AcachaAdminLTELaravelTest::testNewUserRegistration
-ok 13 - AcachaAdminLTELaravelTest::testRequiredFieldsOnRegistrationPage
-ok 14 - AcachaAdminLTELaravelTest::testSendPasswordReset
-ok 15 - AcachaAdminLTELaravelTest::testSendPasswordResetUserNotExists
-not ok 16 - Error: TasksApiTest::testRetrieveAllTasks
-not ok 17 - Error: TasksApiTest::testRetrieveOneTask
-not ok 18 - Error: TasksApiTest::testCreateNewTask
-not ok 19 - Error: TasksApiTest::testUpdateExistingTask
-not ok 20 - Error: TasksApiTest::testDeleteExistingTask
-not ok 21 - Warning: Warning
-not ok 22 - Error: TasksApiTest::testGetNotExistingTask
-not ok 23 - Error: TasksApiTest::testUpdateNotExistingTask
-not ok 24 - Error: TasksApiTest::testDeleteNotExistingTask
-ok 25 - TasksApiTest::testPagination
-ok 26 - TasksApiTest::testNameIsRequiredAndDefaultValues
-ok 27 - TasksApiTest::testPriorityHaveToBeAnInteger
-ok 28 - TasksApiTest::testDoneHaveToBeBoolean
-not ok 29 - Error: UsersApiTest::testRetrieveAllUsers
-not ok 30 - Error: UsersApiTest::testRetrieveOneUser
-not ok 31 - Error: UsersApiTest::testCreateNewUser
-ok 32 - UsersApiTest::testUpdateExistingUser
-ok 33 - UsersApiTest::testDeleteExistingUser
-ok 34 - UsersApiTest::testGetNotExistingUser
-ok 35 - UsersApiTest::testUpdateNotExistingUser
-ok 36 - UsersApiTest::testDeleteNotExistingUser
-ok 37 - UsersApiTest::testPagination
-ok 38 - UsersApiTest::testNameIsRequiredAndDefaultValues
-ok 39 - UsersApiTest::testPriorityHasToBeAnInteger
-ok 40 - UsersApiTest::testDoneHasToBeBoolean
-1..40
+ok 1 - TasksControllerTest::testAuthorizedIndex
+not ok 2 - Failure: TasksControllerTest::testNotAuthorizedIndex
+  ---
+  message: 'Expected status code 403, got 500.'
+  severity: fail
+  data:
+      got: 500
+      expected: 403
+  ...
+ok 3 - TasksControllerTest::testIndex
+1..3
