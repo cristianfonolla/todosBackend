@@ -58,7 +58,12 @@ class TasksController extends Controller
         // Transformations: hem de transformar el que ensenyem
 
 
+
+        $this->authorize('show', \App\Task::class);
+
+
         $tasks = Task::paginate(15);
+
 
 
 
@@ -117,6 +122,8 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         Task::findOrFail($id)->update($request->all());
+
+        $this->authorize('update', $task);
 
         return response([
 
