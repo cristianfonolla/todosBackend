@@ -52,21 +52,19 @@
                     <tr v-for="(todo, index) in filteredTodos"
                         v-bind:todo="todo"
                         v-bind:index="index"
-                        v-bind:from="from"
+                        v-bind:from="from">
 
-
-                    >
-                        <td>{{index + from }}</td>
-                        <td>{{todo.name}}</td>
-                        <td>{{todo.priority}}</td>
-                        <td>{{todo.done}}</td>
-                        <td>
-                            <div class="progress progress-xs">
-                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                            </div>
-                        </td>
-                        <td><span class="badge bg-red">55%</span></td>
-                    </tr>
+                        <!--<td>{{index + from }}</td>-->
+                        <!--<td>{{todo.name}}</td>-->
+                        <!--<td>{{todo.priority}}</td>-->
+                        <!--<td>{{todo.done}}</td>-->
+                        <!--<td>-->
+                            <!--<div class="progress progress-xs">-->
+                                <!--<div class="progress-bar progress-bar-danger" style="width: 55%"></div>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                        <!--<td><span class="badge bg-red">55%</span></td>-->
+                    <!--</tr>-->
                     </tbody>
 
                 </table>
@@ -105,6 +103,7 @@ export default {
             total: 0,
             page: 1
         }
+
     },
     computed: {
         filteredTodos: function() {
