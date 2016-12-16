@@ -49,7 +49,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(todo, index) in filteredTodos">
+                    <tr v-for="(todo, index) in filteredTodos"
+                        v-bind:todo="todo"
+                        v-bind:index="index"
+                        v-bind:from="from"
+
+
+                    >
                         <td>{{index + from }}</td>
                         <td>{{todo.name}}</td>
                         <td>{{todo.priority}}</td>
