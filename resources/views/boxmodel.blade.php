@@ -11,48 +11,164 @@
 
 
 <style>
-    #bloc1
-    {
-        max-width: 600px;
-        margin: 20px auto;
-        border: solid;
-        box-sizing: border-box;
+
+    body{
+        margin: 0px;
+        margin-bottom: 50px;
     }
 
-    #bloc2
+    #nav{
+        position: absolute;
+        left: 0px;
+        width: 200px;
+        border: solid black 1px;
+        background-color: grey;
+    }
+
+    #section
+    {
+        border: solid black 1px;
+        margin-left: 200px;
+        padding: 10px;
+        background-color: darkred;
+    }
+
+    #footer
+    {
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        border: solid black 1px;
+        height: 50px;
+        background-color: lightblue;
+    }
+
+    #container
     {
         position: relative;
-        width: 600px;
-        margin: 20px auto;
-        padding: 50px;
-        border: solid blue 10px;
-        box-sizing: border-box;
     }
 
-    #bloc3
-    {
-        position: absolute;
-        width: 600px;
-        margin: 20px auto;
-        padding: 50px;
-        border: solid blue 10px;
-        box-sizing: border-box;
-    }
 </style>
 
-<div id="bloc1">
-    <span>es una prova inline</span>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam architecto asperiores et eveniet impedit nihil repellat sunt? Consequatur dolores facere fugiat laboriosam natus neque odit officiis qui, repellendus sequi totam?
-    <a href="www.google.es">Google</a>
+
+<div id="container">
+<div id="nav">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
 </div>
 
-<div id="bloc3">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium atque consequatur deserunt, doloribus eveniet maxime molestiae necessitatibus odit quibusdam vel veniam vero. Dignissimos dolor mollitia omnis quis recusandae saepe veritatis!
-</div>
-<div id="bloc2">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, debitis dignissimos eligendi fuga fugiat rerum similique. Cumque debitis dignissimos incidunt iure modi mollitia quis saepe soluta veritatis. Iusto, quae, saepe.
+<div id="section">
+
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus assumenda, cupiditate doloribus eligendi esse et inventore ipsa nam nostrum odio placeat reprehenderit repudiandae sed sequi sit, sunt, totam ullam.
+
 </div>
 
+<div id="section">
+
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+</div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+    <div id="section">
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus accusantium aliquam aliquid animi beatae eius in necessitatibus non qui quod quos rem saepe sed, sit tempora tempore veniam voluptatum.
+
+    </div>
+
+<div id="footer">
+    @copyright Pepito.
+</div>
+
+</div>
 
 
 
