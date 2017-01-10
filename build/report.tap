@@ -1,0 +1,12 @@
+TAP version 13
+ok 1 - TasksControllerTest::testAuthorizedIndex
+not ok 2 - Failure: TasksControllerTest::testNotAuthorizedIndex
+  ---
+  message: 'Expected status code 403, got 500.'
+  severity: fail
+  data:
+      got: 500
+      expected: 403
+  ...
+ok 3 - TasksControllerTest::testIndex
+1..3
