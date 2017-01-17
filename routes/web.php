@@ -21,6 +21,13 @@ Route::group(['middleware' => 'auth'], function () {
         return view('float');
     });
     #adminlte_routes
+    Route::get('flexboxlayout', 'FlexboxlayoutController@index')->name('flexboxlayout');
+
+    
+    Route::get('csstable', 'CsstableController@index')->name('csstable');
+
+    Route::get('layaoutfloat', 'LayaoutfloatController@index')->name('layaoutfloat');
+
     Route::get('boxmodel', 'BoxmodelController@index')->name('boxmodel');
 
 });
