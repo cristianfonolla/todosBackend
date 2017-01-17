@@ -17,6 +17,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users', function () {
         dd(App\User::paginate());
     });
+    Route::get('/float', function () {
+        return view('float');
+    });
     #adminlte_routes
     Route::get('boxmodel', 'BoxmodelController@index')->name('boxmodel');
 
