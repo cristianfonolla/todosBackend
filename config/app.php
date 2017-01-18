@@ -190,6 +190,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
         Spatie\Menu\Laravel\MenuServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
         #llum_providers
 
     ],
