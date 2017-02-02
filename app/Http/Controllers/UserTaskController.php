@@ -2,44 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformers\Contracts\Transformer;
+use App\Repositories\UserTasksRepository;
+use App\Task;
 use App\Transformers\TaskTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
-
-
-use App\Http\Requests;
-
 /**
- * Class UserTaskController
- * @package App\Http\Controllers
+ * Class UserTasksController.
  */
-class UserTaskController extends Controller
+class UserTasksController extends Controller
 {
+    protected $repository;
+
     /**
-     * UserTaskController constructor.
+     * UserTasksController constructor.
+     *
      * @param TaskTransformer $transformer
      */
-    public function __construct(TaskTransformer $transformer)
+    public function __construct(TaskTransformer $transformer, UserTasksRepository $repository)
     {
-
         parent::__construct($transformer);
 
+        $this->repository = $repository;
     }
-
 
     /**
      * Display a listing of the resource.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index($id)
     {
-        $user =  User::findOrFail($id);
-        $tasks = $user->tasks()->paginate(5);
-        return $this->generatePaginatedResponse($tasks,["propietari" => "Sergi Tur"]);
+        //        dd($id);
+        $tasks = $this->repository->paginate($id,5);
+
+        return $this->generatePaginatedResponse($tasks, ['propietari' => 'Cristian']);
     }
 
     /**
@@ -55,29 +55,44 @@ class UserTaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param $iduser
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $iduser)
     {
-        //
+        $this->repository->create($request->all(),$iduser);
+
+        return response([
+            'error'   => false,
+            'created' => true,
+            'message' => 'created successfully',
+        ], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $iduser
+     * @param $idtask
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($iduser, $idtask)
     {
-        //
+        $task = $this->repository->findOrFail($iduser, $idtask);
+
+        return $this->transformer->transform($task);
+//        $task = $user->tasks()->findOrFail($idtask)->paginate(1);
+//        return $this->generatePaginatedResponse($task, ['propietari' => 'David Martinez']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -88,23 +103,39 @@ class UserTaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param $iduser
+     * @param $idtask
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $iduser, $idtask)
     {
-        //
+        $this->repository->update($request->only(['name', 'done', 'priority', 'user_id']),$iduser, $idtask);
+
+        return response([
+            'error'   => false,
+            'updated' => true,
+            'message' => 'Task from user updated successfully',
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $iduser
+     * @param $idtask
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($iduser, $idtask)
     {
-        //
+        $this->repository->delete($iduser, $idtask);
+
+        return response([
+            'error'   => false,
+            'deleted' => true,
+            'message' => 'Task from user deleted successfully',
+        ], 200);
     }
 }
