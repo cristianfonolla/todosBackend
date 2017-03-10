@@ -64,7 +64,7 @@ class TasksController extends Controller
 
         $tasks = Task::paginate(15);
 
-
+        $pepito = new Task();
 
 
 
