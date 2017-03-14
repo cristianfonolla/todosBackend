@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Repositories\UserTasksRepository;
 use App\Task;
+use App\Transformers\Contracts\Transformer;
 use App\Transformers\TaskTransformer;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests;
 
 /**
  * Class UserTasksController.
@@ -27,6 +29,8 @@ class UserTasksController extends Controller
         $this->repository = $repository;
     }
 
+
+
     /**
      * Display a listing of the resource.
      *
@@ -37,9 +41,12 @@ class UserTasksController extends Controller
     public function index($id)
     {
         //        dd($id);
-        $tasks = $this->repository->paginate($id,5);
+        $tasks = $this->repository->paginate($id, 5);
 
         return $this->generatePaginatedResponse($tasks, ['propietari' => 'Cristian']);
+        /*
+         * @return \Illuminate\Http\Response
+         */
     }
 
     /**
@@ -55,6 +62,7 @@ class UserTasksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * <<<<<<< HEAD
      * @param \Illuminate\Http\Request $request
      * @param $iduser
      *
@@ -62,14 +70,15 @@ class UserTasksController extends Controller
      */
     public function store(Request $request, $iduser)
     {
-        $this->repository->create($request->all(),$iduser);
+        $this->repository->create($request->all(), $iduser);
 
         return response([
-            'error'   => false,
+            'error' => false,
             'created' => true,
             'message' => 'created successfully',
         ], 200);
     }
+
 
     /**
      * Display the specified resource.
@@ -93,6 +102,7 @@ class UserTasksController extends Controller
      *
      * @param int $id
      *
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -111,10 +121,10 @@ class UserTasksController extends Controller
      */
     public function update(Request $request, $iduser, $idtask)
     {
-        $this->repository->update($request->only(['name', 'done', 'priority', 'user_id']),$iduser, $idtask);
+        $this->repository->update($request->only(['name', 'done', 'priority', 'user_id']), $iduser, $idtask);
 
         return response([
-            'error'   => false,
+            'error' => false,
             'updated' => true,
             'message' => 'Task from user updated successfully',
         ], 200);
@@ -133,7 +143,7 @@ class UserTasksController extends Controller
         $this->repository->delete($iduser, $idtask);
 
         return response([
-            'error'   => false,
+            'error' => false,
             'deleted' => true,
             'message' => 'Task from user deleted successfully',
         ], 200);

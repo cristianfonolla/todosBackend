@@ -29,7 +29,7 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"  @click="setVisibility('all')">All</a></li>
+                        <li><a href="#"  v-on:click="setVisibility('all')">All</a></li>
                         <li><a href="#"  @click="setVisibility('active')">Active</a></li>
                         <li><a href="#/" @click="setVisibility('completed')">Completed</a></li>
                     </ul>

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Repositories\TaskRepository;
 use App\Task;
 use App\Transformers\TaskTransformer;
@@ -15,10 +16,9 @@ use Response;
  * Descripcio llarga
  *
  *
- *@package App\Http\Controllers
+ * @package App\Http\Controllers
  *
  */
-
 class TasksController extends Controller
 {
     /**
@@ -58,17 +58,16 @@ class TasksController extends Controller
         // Transformations: hem de transformar el que ensenyem
 
 
-
         $this->authorize('show', \App\Task::class);
 
 
         $tasks = Task::paginate(15);
 
-        $pepito = new Task();
 
 
 
-        return $this->generatePaginatedResponse($tasks,["propietari" => "Crisitan Fonollà Prats"]);
+
+        return $this->generatePaginatedResponse($tasks, ["propietari" => "Crisitan Fonollà Prats"]);
     }
 
     /**
@@ -89,8 +88,8 @@ class TasksController extends Controller
         Task::create($request->all());
 //        Task::create($request->all());
         return response([
-            'error'   => false,
-            'created' => (bool) true,
+            'error' => false,
+            'created' => (bool)true,
             'message' => 'Task created successfully',
         ], 200);
 
@@ -128,7 +127,7 @@ class TasksController extends Controller
         return response([
 
             'updated' => true,
-            'error'   => false,
+            'error' => false,
             'message' => 'Tasca actualitzada correctament!',
 
         ], 200);
@@ -143,7 +142,7 @@ class TasksController extends Controller
         Task::findOrFail($id)->delete();
 
         return response([
-            'error'   => false,
+            'error' => false,
             'deleted' => true,
             'message' => 'Task deleted successfully',
         ], 200);

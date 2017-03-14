@@ -14,6 +14,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile/tokens', function () {
         return view('tokens');
     });
+
     Route::get('/users', function () {
         dd(App\User::paginate());
     });
@@ -29,14 +30,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('flexboxlayout', 'FlexboxlayoutController@index')->name('flexboxlayout');
 
-    
+
     Route::get('csstable', 'CsstableController@index')->name('csstable');
 
     Route::get('layaoutfloat', 'LayaoutfloatController@index')->name('layaoutfloat');
 
     Route::get('boxmodel', 'BoxmodelController@index')->name('boxmodel');
-
 });
+
 Route::get('/', function () {
     return view('welcome');
 });
